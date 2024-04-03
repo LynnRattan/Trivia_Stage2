@@ -24,9 +24,10 @@ namespace Trivia_Stage2.ViewModels
         public string PlayerName { get { return playerName; } set { playerName = value; OnPropertyChanged(); ((Command)LoginCommand).ChangeCanExecute(); ((Command)CancelCommand).ChangeCanExecute(); } }
         public ICommand LoginCommand { get; set; }
         public ICommand CancelCommand { get; set; }
-        public LoginPageViewModel(Service s)
+        public LoginPageViewModel(Service s, TriviaService t)
         {
             service = s;
+            triviaService = t;
             LoginCommand = new Command(Login, () => !string.IsNullOrEmpty(PlayerName) && !string.IsNullOrEmpty(Password));
             CancelCommand = new Command(Cancel, () => !string.IsNullOrEmpty(PlayerName) || !string.IsNullOrEmpty(Password));
             if (Logged != true)
@@ -38,7 +39,8 @@ namespace Trivia_Stage2.ViewModels
 
         private async void Login()
         {
-            if (triviaService.LogPlayer(playerName,password)!=null)
+            var player = await triviaService.LogPlayer(PlayerName, Password);
+            if (player != null)
             {
                 Notif = "Login succeeded successfully";
                 NotifColor = Colors.Green;
