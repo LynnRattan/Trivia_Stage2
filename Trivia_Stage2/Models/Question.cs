@@ -48,4 +48,6 @@ public partial class Question
     [ForeignKey("SubjectId")]
     [InverseProperty("Questions")]
     public virtual Subject? Subject { get; set; }
+
+    public ServiceError ServiceError { get; set; }
 }

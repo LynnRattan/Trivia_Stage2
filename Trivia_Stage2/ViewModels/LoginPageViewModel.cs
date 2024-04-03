@@ -11,7 +11,7 @@ namespace Trivia_Stage2.ViewModels
 {
     public class LoginPageViewModel : ViewModel
     {
-        private Service service;
+        private Service service;private TriviaService triviaService;
         private bool logged;
         public bool Logged { get { return logged; } set {  logged = value; OnPropertyChanged(); } }
         private string password;
@@ -38,7 +38,7 @@ namespace Trivia_Stage2.ViewModels
 
         private async void Login()
         {
-            if (service.LogPlayer(playerName,password))
+            if (triviaService.LogPlayer(playerName,password)!=null)
             {
                 Notif = "Login succeeded successfully";
                 NotifColor = Colors.Green;
